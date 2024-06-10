@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>attendance tracker</title>
+<script>
+    let clickCounts = [0, 0, 0, 0];
+    let totalClicks = 0;
+
+    function countClick(index) {
+        clickCounts[index]++;
+        totalClicks++;
+        updateCountDisplays();
+    }
+
+    function resetCounts() {
+        clickCounts = [0, 0, 0, 0];
+        totalClicks = 0;
+        updateCountDisplays();
+    }
+    
+    function updateCountDisplays() {
+        for (let i = 0; i < clickCounts.length; i++) {
+            document.getElementById(`clickCountDisplay${i}`).innerText = clickCounts[i];
+        }
+        document.getElementById('totalClicksDisplay').innerText = totalClicks;
+    }
+    
+    function submitCounts() {
+        document.getElementById('clickCountsInput').value = JSON.stringify(clickCounts);
+        document.getElementById('totalClicksInput').value = totalClicks;
+        document.getElementById('clickCountForm').submit();
+    }
+</script>
+</head>
+<body>
+
+<h1>STUDENT PRESENCE TRACKER</h1>
+
+<div>
+    <p>student of 1st  year click this: clicks= <span id="clickCountDisplay0">0</span></p>
+    <button onclick="countClick(0)">1st year</button>
+</div>
+<div>
+    <p>student of 1nd  year click this:clicks= <span id="clickCountDisplay1">0</span></p>
+    <button onclick="countClick(1)">2nd year</button>
+</div>
+<div>
+    <p>student of 3rd year click this: clicks= <span id="clickCountDisplay2">0</span></p>
+    <button onclick="countClick(2)">3rd year</button>
+</div>
+<div>
+    <p>student of 4th  year click this: clicks= <span id="clickCountDisplay3">0</span></p>
+    <button onclick="countClick(3)">4th year</button>
+</div>
+
+<p>Total clicks: <span id="totalClicksDisplay">0</span></p>
+
+<button onclick="resetCounts()">Reset</button>
+<button onclick="submitCounts()">Submit</button>
+
+<form id="clickCountForm" action="submit.php" method="post">
+    <input type="hidden" id="clickCountsInput" name="clickCounts" value="">
+    <input type="hidden" id="totalClicksInput" name="totalClicks" value="">
+</form>
+
+</body>
+</html>
